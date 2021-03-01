@@ -1,15 +1,15 @@
 pipeline {
-  agent {
-    dockerfile {
-      filename 'Dockerfile'
+  agent any
+  stages {
+    stage('BUILD') {
+      steps {
+        sh 'docker build . -t dextercdalogdog/backend-core:latest'
+      }
     }
 
-  }
-  stages {
-    stage('build') {
+    stage('RUN') {
       steps {
-        sh 'npm install'
-        sh 'npm run build'
+        sh 'docker run -d -p 3000:3000 dextercdalogdog/backend-core:latest'
       }
     }
 
