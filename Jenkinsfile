@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('stage-1') {
       steps {
-        sh 'echo \'hello\';'
+        sh 'git clone git@github.com:dextercdalogdog/backend-core.git'
       }
     }
 
