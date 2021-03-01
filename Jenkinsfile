@@ -1,15 +1,32 @@
 pipeline {
-  agent any
-  stages {
-    stage('build') {
-      steps {
-        git(credentialsId: 'jenkins-to-repo', url: 'https://github.com/dextercdalogdog/backend-core', branch: 'main')
-        sh 'npm install'
-      }
+
+    agent any
+
+    stages {
+
+        stage ('Initialization') {
+            steps {
+                sh 'echo "Starting the build"'
+            }
+        }
+
+        stage ('Build') {
+            steps {
+                sh 'npm install'
+            }
+        }
+      
+        stage ('NPM Audit Analysis') {
+            steps {
+                sh '/{PATH TO SCRIPT}/npm-audit.sh'
+            }
+        }
+
+        stage ('NodeJsScan Analysis') {
+            steps {
+                sh 'nodejsscan --directory `pwd` --output /{JENKINS HOME DIRECTORY}/reports/nodejsscan-report'
+            }
+        }
     }
 
-  }
-  environment {
-    PORT = '3000'
-  }
 }
