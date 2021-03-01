@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('stage-1') {
+    stage('build') {
       steps {
-        sh 'git clone git@github.com:dextercdalogdog/backend-core.git'
+        git(credentialsId: 'jenkins-to-repo', url: 'https://github.com/dextercdalogdog/backend-core', branch: 'main')
       }
     }
 
