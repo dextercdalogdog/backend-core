@@ -13,6 +13,12 @@ pipeline {
       }
     }
 
+    stage('') {
+      steps {
+        sh 'docker build . -t dextercdalogdog/backend-core:latest'
+      }
+    }
+
   }
   environment {
     PORT = '4000'
