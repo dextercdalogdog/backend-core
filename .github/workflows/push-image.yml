@@ -1,4 +1,4 @@
-name: Docker
+name: Push to Dev
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -8,17 +8,11 @@ name: Docker
 on:
   push:
     branches: 
-    - main
-    - uat
-    - qa
     - dev
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: 
-    - main
-    - uat
-    - qa
     - dev
 
 env:
@@ -39,7 +33,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
+        
+      - name: Install Trivy
+        run: |
+          sudo apt install rpm -y
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.20.1/trivy_0.20.1_Linux-64bit.deb
+          sudo dpkg -i trivy_0.20.1_Linux-64bit.deb
+          trivy -v
+      
+      - name: Scan project repository
+        run: |
+          cd app/
+          docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} .
+          trivy image --ignore-unfixed --severity=MEDIUM,HIGH,CRITICAL ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
       - name: Log into registry ${{ env.REGISTRY }}
