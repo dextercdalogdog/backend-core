@@ -63,8 +63,8 @@ jobs:
       - name: Scan project repository
         run: |
           cd src/
-          docker build -t docker pull dextercdalogdog/test-core:dev .
-          trivy image --ignore-unfixed --severity=MEDIUM,HIGH,CRITICAL docker pull dextercdalogdog/test-core:dev
+          docker build -t dextercdalogdog/test-core:dev .
+          trivy image --ignore-unfixed --severity=MEDIUM,HIGH,CRITICAL dextercdalogdog/test-core:dev
       
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
