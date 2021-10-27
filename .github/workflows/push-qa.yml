@@ -6,11 +6,6 @@ name: Push to QA
 # documentation.
 
 on:
-  push:
-    branches: 
-    - qa
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
   pull_request:
     branches: 
     - qa
