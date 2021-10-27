@@ -63,7 +63,7 @@ jobs:
       - name: Scan project repository
         run: |
           cd app/
-          docker build -t ${{ steps.meta.outputs.tags }} .
+          docker images
           trivy image --ignore-unfixed --severity=MEDIUM,HIGH,CRITICAL ${{ steps.meta.outputs.tags }}
       
       # Build and push Docker image with Buildx (don't push on PR)
