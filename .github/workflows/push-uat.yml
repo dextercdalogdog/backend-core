@@ -6,11 +6,6 @@ name: Push to UAT
 # documentation.
 
 on:
-  push:
-    branches: 
-    - uat
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
   pull_request:
     branches: 
     - uat
